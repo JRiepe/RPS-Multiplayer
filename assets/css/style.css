@@ -1,0 +1,147 @@
+
+
+
+html 		{
+	background-color: steelblue;
+	/* background-image: url("../images/staircase.png"); */
+	background-repeat: no-repeat;
+	background-size: auto;
+	
+} /* end html */
+
+
+.container 	{
+	position: relative;
+	margin: 0 auto;  
+	margin-top: 100px;
+	width: 75%;
+	height: 75%;
+	background-color: black;
+	float: none;
+	/* min-height: 100%; */
+	/* height: auto !important; */
+	/* height: 100%; */
+	border-style: ridge;
+	border-width: 4px;
+	border-color: wheat;
+	
+
+}	/* end .container */      
+
+header 		{
+	
+	/* height: 50px; */
+	/* width: auto; */
+	position: static;
+	float: none;
+	text-align: center;
+	font-size: 300%;
+	font-style: italic;
+	background-color: black;
+	color: limegreen;
+	border-style: solid;
+	border-width: 2px;
+	border-color: transparent;
+	height: 60px;
+	overflow: auto;	 
+
+}	/* end header */
+
+
+
+body 		{	
+	background-color: transparent;
+    width: auto;
+	margin: 0px auto; /* Centers whole page dammit */
+	padding: 0px;
+	height: 100%;
+	color: steelblue;
+	border-width: 0px;
+	text-align: center;
+
+}	/* end body */ 
+
+
+h1			{
+font-family: 'Times new roman', serif;
+font-size: 24px;
+color: steelblue;
+
+}
+
+#submitLabel{
+	color: limegreen;
+	
+
+	font-size: 18px;
+}
+
+
+
+
+button, #addAnimal {
+	color: black;
+	min-width: 100px;
+	margin: 2px;
+	height: 30px;
+	font-size: 20px;
+	border-style: ridge;
+	border-color: steelblue;
+	border-width: 4px;
+	background-color: wheat;
+
+}   
+
+
+
+
+input	{
+	width: 150px;
+	color: black
+	background-color: steelblue;
+}
+
+#buttonCol	{
+	position: relative;
+	float: left;
+
+}
+
+#submitCol	{
+	position: relative;
+	float: left;
+	text-align: center;
+
+}
+
+#animalRow	{
+	position: relative;
+	float: left;
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	color: wheat;
+	font-size: 20px;
+
+}
+
+
+
+hr {
+color: wheat;
+width: 100%;
+padding: 0px;
+margin-top:  5px;
+margin-bottom: 5px;
+}
+
+
+
+button:hover, #addAnimal:hover { 
+	
+	background-color: steelblue;
+	color: wheat;
+	
+
+}
+
