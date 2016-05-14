@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>CountDown Button with Firebase!</title>
+	<title>Rock, Paper, Scissors. 2 Player edition</title>
 	<!-- Link to Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	
@@ -22,12 +22,46 @@
 
 <body>
 	
-	<h1>Only <span id="clickValue"></span> clicks to go!!</h1>
-	<button id="clickButton">Click Me!!!!</button>
-	<button id="restartButton">Restart</button>
-
-
 	
+		<div class="container">
+			<!-- <div class="jumbotron"> -->
+			<header>Rock, Paper, Scissors<br><h2>2 Player Edition</h2></header><br>
+			
+			<!-- </div> --> <!-- end jumbotron div -->
+			<div id="playerBox">
+					<div id="player1">
+							<br>
+							<h1>Player 1: </h1>
+							<br>
+							<button id="rockButton">Rock</button><br>
+							<button id="paperButton">Paper</button><br>
+							<button id="scissorsButton">Scissors</button><br><br><br>
+							<button id="clickButton">Play</button>
+							<br>
+							<br>
+							<h3>Wins:   <span id="wins"></span></h3>
+							<h3>Losses: <span id="losses"></span></h3>
+							<br>
+					</div> <!-- end player1 div -->
+
+					<div id="player2">
+							<br>
+							<h1>Player 2: </h1>
+							<br>
+							<button id="rockButton">Rock</button><br>
+							<button id="paperButton">Paper</button><br>
+							<button id="scissorsButton">Scissors</button><br><br><br>
+							<button id="clickButton">Play</button>
+							<br>
+							<br>
+							<h3>Wins:   <span id="wins"></span></h3>
+							<h3>Losses: <span id="losses"></span></h3>
+							<br>
+					</div> <!-- end player2 div -->
+
+			</div> <!-- end playerBox -->
+
+		</div> <!-- end container div -->
 
 </body>
 </html>

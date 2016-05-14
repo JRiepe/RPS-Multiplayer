@@ -2,10 +2,10 @@
 
 
 html 		{
-	background-color: steelblue;
-	/* background-image: url("../images/staircase.png"); */
+	background-color: black;
+	background-image: url("../images/rpswallpaper.png");
 	background-repeat: no-repeat;
-	background-size: auto;
+	background-size: 100%;
 	
 } /* end html */
 
@@ -13,36 +13,39 @@ html 		{
 .container 	{
 	position: relative;
 	margin: 0 auto;  
-	margin-top: 100px;
-	width: 75%;
-	height: 75%;
-	background-color: black;
-	float: none;
-	/* min-height: 100%; */
-	/* height: auto !important; */
-	/* height: 100%; */
-	border-style: ridge;
-	border-width: 4px;
-	border-color: wheat;
+	/* margin-top: 100px; */
+	width: auto;
 	
+	background-color: transparent;
+	float: none;
+	
+	height: auto !important; */
+	
+	border-style: ridge;
+	border-width: 0px;
+	border-color: black;
+	text-align: center;
+	overflow: auto;
 
 }	/* end .container */      
 
 header 		{
 	
-	/* height: 50px; */
-	/* width: auto; */
-	position: static;
+	min-height: 100px;
+	padding-top: 5px;
+	
+	position: relative;
 	float: none;
 	text-align: center;
 	font-size: 300%;
 	font-style: italic;
-	background-color: black;
-	color: limegreen;
-	border-style: solid;
-	border-width: 2px;
-	border-color: transparent;
-	height: 60px;
+	background-color: wheat;
+	color: inherit;
+	border-style: ridge;
+	border-width: 5px;
+	border-radius: 15px;
+	border-color: limegreen;
+	
 	overflow: auto;	 
 
 }	/* end header */
@@ -52,20 +55,28 @@ header 		{
 body 		{	
 	background-color: transparent;
     width: auto;
-	margin: 0px auto; /* Centers whole page dammit */
+    height: auto;
+	margin: 0 auto; /* Centers whole page dammit */
 	padding: 0px;
-	height: 100%;
-	color: steelblue;
+	height: auto;
+	color: black;
 	border-width: 0px;
 	text-align: center;
 
 }	/* end body */ 
 
 
-h1			{
-font-family: 'Times new roman', serif;
-font-size: 24px;
-color: steelblue;
+h1, h3		{
+	font-family: 'Times new roman', serif;
+	font-size: 20px;
+	color: wheat;
+
+}
+
+h2 {
+	font-family: 'Times new roman', serif;
+	font-size: 20px;
+	color: black !important;
 
 }
 
@@ -86,14 +97,71 @@ button, #addAnimal {
 	height: 30px;
 	font-size: 20px;
 	border-style: ridge;
-	border-color: steelblue;
+	border-color: limegreen;
 	border-width: 4px;
 	background-color: wheat;
 
 }   
 
+#playerBox {
+	
+	position: relative;
+	float: none;
+	padding: 10px;
+	max-width: 500px;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: transparent;
+	border-style: ridge;
+	border-color: wheat;
+	color: wheat;
+	border-width: 0px;
+	font-size: 15px;
+	overflow: auto;
+	text-align: center;
 
+}	/* end #player1 */
 
+#player1 {
+	position: relative;
+	float: left;
+	padding: 0px;
+	width: 200px;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: black;
+	border-style: ridge;
+	border-color: wheat;
+	color: wheat;
+	border-width: 5px;
+	
+	font-size: 15px;
+	overflow: auto;
+	text-align: center;
+
+}	/* end #player1 */
+
+#player2 {
+	position: relative;
+	float: left;
+	padding: 0px;
+	width: 200px;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: black;
+	border-style: ridge;
+	border-color: wheat;
+	color: wheat;
+	border-width: 5px;
+	
+	font-size: 15px;
+	overflow: auto;
+	text-align: center;
+
+}	/* end #player2 */
 
 input	{
 	width: 150px;
@@ -139,9 +207,31 @@ margin-bottom: 5px;
 
 button:hover, #addAnimal:hover { 
 	
-	background-color: steelblue;
-	color: wheat;
+	background-color: limegreen;
+	border-color: wheat;
 	
 
 }
+
+
+@media only screen and (max-width: 400px)
+
+
+	{	
+
+		.container 	{
+			width: 300px;
+					}
+
+		
+		body 		{
+			width: 300px; 
+					}
+		
+		#player1, #player2 {
+			margin-left: 30px;
+		}
+	}
+		
+
 
