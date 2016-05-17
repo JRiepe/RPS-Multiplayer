@@ -24,42 +24,62 @@
 	
 	
 		<div class="container">
-			<!-- <div class="jumbotron"> -->
+			
 			<header>Rock, Paper, Scissors<br><h2>2 Player Edition</h2></header><br>
 			
-			<!-- </div> --> <!-- end jumbotron div -->
+			<div id="nameBox">
+				<form id="nameForm">
+				    <label for="nameInput">Enter your Name: </label>
+				    <input type="text" id="nameInput"><br>
+				    
+				    <!-- Button triggers new player to be added -->
+				    <input id="addPlayer" type="submit" value="Enter">
+  				</form>
+			</div>
+
+
 			<div id="playerBox">
+					<!-- Player 1 info will go here -->
 					<div id="player1">
 							<br>
 							<h1>Player 1: </h1>
 							<br>
-							<button id="rockButton">Rock</button><br>
-							<button id="paperButton">Paper</button><br>
-							<button id="scissorsButton">Scissors</button><br><br><br>
-							<button id="clickButton">Play</button>
+							<div id="p1Info"></div>
+							
+							<!-- <div id="rock1">Rock</div><br>
+							<div id="paper1">Paper</div><br>
+							<div id="scissors1">Scissors</div><br><br><br>
 							<br>
 							<br>
-							<h3>Wins:   <span id="wins"></span></h3>
-							<h3>Losses: <span id="losses"></span></h3>
-							<br>
+							<h3>Wins:   <span id="p1Wins"></span></h3>
+							<h3>Losses: <span id="p1Losses"></span></h3>
+							<br> -->
 					</div> <!-- end player1 div -->
+					
+					<!-- Results info will go here -->
+					<!-- ************************* -->
+					<div id="resultsBox"></div> <!-- end resultsBox -->
 
+					<!-- Player 2 info will go here -->
 					<div id="player2">
 							<br>
 							<h1>Player 2: </h1>
 							<br>
-							<button id="rockButton">Rock</button><br>
-							<button id="paperButton">Paper</button><br>
-							<button id="scissorsButton">Scissors</button><br><br><br>
+							<div id="p2Info"></div>
+							<!-- <button id="rock2">Rock</button><br>
+							<button id="paper2">Paper</button><br>
+							<button id="scissors2">Scissors</button><br><br><br>
 							<button id="clickButton">Play</button>
 							<br>
 							<br>
-							<h3>Wins:   <span id="wins"></span></h3>
-							<h3>Losses: <span id="losses"></span></h3>
-							<br>
+							<h3>Wins:   <span id="p2Wins"></span></h3>
+							<h3>Losses: <span id="p2Losses"></span></h3>
+							<br> -->
 					</div> <!-- end player2 div -->
 
 			</div> <!-- end playerBox -->
+			<div id="commentBox"></div>
+			<div id="resetBox"><button id=resetButton>Reset</button></div>
 
 		</div> <!-- end container div -->
 

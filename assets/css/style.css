@@ -80,31 +80,21 @@ h2 {
 
 }
 
-#submitLabel{
-	color: limegreen;
-	
-
+#nameForm, #nameInput {
+	background-color: transparent;
+	color: white;
 	font-size: 18px;
 }
 
 
-
-
-button, #addAnimal {
+#addPlayer, #resetButton  {
 	color: black;
-	min-width: 100px;
-	margin: 2px;
-	height: 30px;
-	font-size: 20px;
-	border-style: ridge;
-	border-color: limegreen;
-	border-width: 4px;
 	background-color: wheat;
 
 }   
 
 #playerBox {
-	
+	margin: 0 auto;
 	position: relative;
 	float: none;
 	padding: 10px;
@@ -123,12 +113,12 @@ button, #addAnimal {
 
 }	/* end #player1 */
 
-#player1 {
+#player1, #player2, #resultsBox {
 	position: relative;
 	float: left;
-	padding: 0px;
-	width: 200px;
-	height: auto;
+	padding: 10px;
+	width: 150px;
+	min-height: 200px;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: black;
@@ -143,7 +133,7 @@ button, #addAnimal {
 
 }	/* end #player1 */
 
-#player2 {
+/* #player2 {
 	position: relative;
 	float: left;
 	padding: 0px;
@@ -161,7 +151,7 @@ button, #addAnimal {
 	overflow: auto;
 	text-align: center;
 
-}	/* end #player2 */
+} */	/* end #player2 */ 
 
 input	{
 	width: 150px;
@@ -205,6 +195,8 @@ margin-bottom: 5px;
 
 
 
+}
+
 button:hover, #addAnimal:hover { 
 	
 	background-color: limegreen;
@@ -228,7 +220,7 @@ button:hover, #addAnimal:hover {
 			width: 300px; 
 					}
 		
-		#player1, #player2 {
+		#player1, #resultsBox, #player2 {
 			margin-left: 30px;
 		}
 	}

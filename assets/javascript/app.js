@@ -1,212 +1,127 @@
-  // Link to Firebase (YOUR OWN APP)
-var clickData = new Firebase("https://this-old-app.firebaseio.com/");
-
-// Use the below Initial Value 
-var initialValue = 100;
-
-// Use the below variable clickCounter to keep track of the clicks.
-var clickCounter = initialValue;  
-
-// --------------------------------------------------------------
-
-// At the initial load, get a snapshot of the current data. (I.E FIREBASE HERE)
-// HINT: Use 
-
-firebaseLink.on("value", function(snapshot)) {
-    console.log(snapshot.val());
-    initialValue = snapshot.val();
-
-    clickCounter = snapshot.val().clickCount;
-    $("#clickValue").html(snapshot.val().clickCount);
-} function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-
-// Inside your .on function...
-  
-  //  ok-Console.log the initial "snapshot" value (the object itself)
-
-
-  // ok-Change the initial value to reflect the initial value in Firebase
-  // HINT: snapshot.val().__________
-
-
-  // ok-Change the value of your clickCounter to match the value in the database
-  // ___________ = snapshot.val().______________________
-
-
-  // ok-Change the HTML using jquery to reflect the updated clickCounter value
-  
-
-// Then include Firebase error logging
-// HINT: }, function(errorObject) 
-
-// --------------------------------------------------------------
-
-// Whenever a user clicks the click button
-$("#clickButton").on("click", function() {
-
-  // Reduce the clickCounter by 1
-  clickCounter--;
-
-  // Alert User and reset the counter
-  if (clickCounter == 0 ) {
-    alert("Phew! You made it! That sure was a lot of clicking.");
-    clickCounter = initialValue;
-  }
-
-  // Save new value to Firebase
-    clickData.set({
-        clickCount: clickCounter
-      });
-
-
-  // Log the value of clickCounter
-  console.log(clickCounter);
-
-});
-
-// Whenever a user clicks the restart button
-$("#restartButton").on("click", function() {
-
-  // Set the clickCounter back to initialValue
-  clickCounter = initialValue;
-  
-  // Save new value to Firebase
-  clickData.set({
-      clickCount: clickCounter
-    });
-
-
-
-  // Log the value of clickCounter
-  console.log(clickCounter);
-
-  // Change the HTML Values
-  $('#clickValue').html(clickCounter);
-
-
-});
-
-// End logic with Firebase
-
 //-----------------------------------------------------------------------------------------------
-//      Javascript AnimalTastic Game
+//      Javascript / Firebase RPS Game
 //------------------------------------------------------------------------------------------------
 
+// Link to Firebase (YOUR OWN APP)
+$(document).ready(function(){
+            
 
-    function startProgram(){
-        $('#buttonCol').empty();
-        var animals = ["dog", "cat", "horse", "whale", "dolphin", "fox", "wolf", "tiger", "elephant"];
-        buttonGenerator();
+            var url = "https://jriepeweek07.firebaseio.com/";
+            var gameData = new Firebase(url);
 
-//-----------------------------------------------------------------------------------------------
-//         Functions buttonGenerator() adds animal buttons to page
-//-----------------------------------------------------------------------------------------------
-     
+            // Initial Values
 
-        function buttonGenerator() {
-              $('#buttonCol').empty();
-              console.log(animals);
-              var i=0;
-              for (i=0;i<animals.length;i++)  {
-                  var a = $('<button>'); // This code $('<button>') is all jQuery needs to create the beginning and end tag. (<button></button>)
-                  a.addClass('aniButton'); // Added a class 
-                  a.attr('data-name', animals[i]); // Added a data-attribute
-                  a.text(animals[i]); // Provided the initial button text
-                  $('#buttonCol').append(a); // Added the button to the HTML
-                  
-              } // end for loop
+            var snapshot;
+            var comment;
+            var yourName;
+            var yourPlayer;
+            var opponentName;
+            var p1Name;
+            var p2Name;
 
-        }
-        
-        
+            var p1Wins = 0;
+            var p2Wins = 0;
+            var p1Losses = 0;
+            var p2Losses = 0;
+
+            var p1Comment;
+            var p2Comment;
+            var localData;
+
+            
+
+            gameData.orderByChild("player").equalTo(1).on("child_added", function(snapshot) {
+            
+                p1Name = snapshot.val().name;
+                p1Wins = snapshot.val().wins;
+                p1Losses = snapshot.val().losses;
+                $('#p1Info').html('<br>' + p1Name + '<br>Wins: ' + p1Wins + '<br>Losses: ' + p1Losses);
+            });
+            gameData.orderByChild("player").equalTo(2).on("child_added", function(snapshot) {
                 
+                p2Name = snapshot.val().name;
+                p2Wins = snapshot.val().wins;
+                p2Losses = snapshot.val().losses;
+                $('#p2Info').html('<br>' + p2Name + '<br>Wins: ' + p2Wins + '<br>Losses: ' + p2Losses);
+            });
+                
+                
+             gameData.on("value", function(snapshot) {   
+                console.log(snapshot.val());
+                localData = snapshot.val();
 
-//-----------------------------------------------------------------------------------------------
-//         On click Functions:
-//-----------------------------------------------------------------------------------------------
+            }, function (errorObject) {
+                //console.log("The read failed: " + errorObject.code);
+            });
 
-//-----------------------------------------------------------------------------------------------               
-// click submit to add animal to array and regenerate buttons
-//-----------------------------------------------------------------------------------------------
 
+            $("#addPlayer").on("click", function() {
+                yourName = $('#nameInput').val().trim();
+                
+                //var a = localData;
+                //var b = localData.numChildren();
+                //var c = 
+                //console.log('a: ' + a);
+                //console.log('b: ' + b);
+                //console.log('c: ' + c)
+               
+                if (localData === null) {
+                    yourPlayer = 1;
+                    p1Name = yourName;
+                    //console.log('p1Name: ' + p1Name);
+                    gameData.push({
+                        player: yourPlayer,
+                        name: p1Name,
+                        wins: p1Wins,
+                        losses: p1Losses
+                         
+                    });
+                    //console.log(ref.key());
+                    //$('#p1Info').html('<br>' + p1Name + '<br>Wins: ' + p1Wins + '<br>Losses: ' + p1Losses);
+                    return false;
+                }
+                else if (localData !== null && localData.player !== 2) {
+                    yourPlayer = 2;
+                    p2Name = yourName;
+                    //console.log('p2Name: ' + p2Name);
+                    gameData.push({
+                        player: yourPlayer, 
+                        name: p2Name,
+                        wins: p2Wins,
+                        losses: p2Losses
+                          
+                    });
+                    //$('#p2Info').html('<br>' + p2Name + '<br>' + 'Wins: ' + p2Wins + 'Losses: ' + p2Losses);
+                }
+                
+                else {
+                    alert("I'm sorry, the game is full. Please try again later!");
+                } 
+
+
+
+              // Alert User and reset the counter
               
 
-                $('#addAnimal').on('click', function(){
-                        
-                        var newAnimal=$('#animal-input').val().trim();
-                        animals.push(newAnimal);
-                        buttonGenerator();
-                        return false;
-                        
 
-                }); // end $('#addAnimal').on('click', function()
+                return false;
 
+              
+            });
 
+            // Whenever a user clicks the restart button
+            $("#resetButton").on("click", function() {
 
+              // clear out saved data
+                     gameData.set(null);
+                     $('#p1Info').html('');
+                     $('#p2Info').html('');
+             }) 
+            // End logic with Firebase
 
-
-//-----------------------------------------------------------------------------------------------               
-// click animal button to show images of chosen animal
-//-----------------------------------------------------------------------------------------------
-
-                $(document).on('click', '.aniButton', function(){
-                
-                          var animal = $(this).attr('data-name');
-                          var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
-                          $('#animalRow').empty();
-                              // Creates AJAX call for the specific movie being 
-                              $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
-                                      var results = response.data;
-                                      for (var i = 0; i < results.length; i++) {
-
-                                          var p = $('<p>').text('Rating: ' + results[i].rating);
-
-                                          var animalImg = $('<img>').attr('src',results[i].images.fixed_height_still.url);
-                                          
-                                          animalImg.addClass('animalImage');
-                                          animalImg.attr('data-still', results[i].images.fixed_height_still.url);
-                                          animalImg.attr('data-animate', results[i].images.fixed_height.url);
-                                          animalImg.attr('data-state','still');
-                  
-                                          $('#animalRow').append('<hr>').append(p).append(animalImg);
-                                          
-                                      }
-                                 
-                              }); 
-
-                            
-
-                }); // end $('.aniButton').on('click', function()
+ 
 
 
+}); // end $(document).ready(function() { 
 
-
-//-----------------------------------------------------------------------------------------------               
-// click on image to animate or de-animate
-//-----------------------------------------------------------------------------------------------
-
-                  $(document).on('click', '.animalImage', function(){
-                 
-                    
-                        var state = $(this).attr("data-state");
-                        
-                        if (state == 'still') {
-                            $(this).attr('src',$(this).attr('data-animate'));
-                            $(this).attr('data-state','animate');
-                            
-                        }
-
-                        else  {
-                            $(this).attr('src',$(this).attr('data-still'));
-                            $(this).attr('data-state','still');
-                            
-                        }
-                        
-                        
-                });    // end $('.animalImage').on('click', function() 
-    
-                                      
-
-}  //end function startProgram()
 
