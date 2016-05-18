@@ -88,6 +88,16 @@ h2 {
 	
 }
 
+#p1Name, #p2Name {
+	color: white;
+	font-size: 20px;
+}
+
+#p1Score, #p2Score {
+	position: relative;
+	float: right;
+}
+
 
 
 #addPlayer, #resetButton  {
@@ -134,28 +144,47 @@ h2 {
 	overflow: auto;
 	text-align: center;
 
-}	/* end #player1 */
+}	/* end #player1 #player2 #resultsBox */
 
-/* #player2 {
+
+
+
+#commentBox {
+	margin: 0 auto;
 	position: relative;
-	float: left;
-	padding: 0px;
-	width: 200px;
-	height: auto;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: black;
+	float: none;
+
+	
+	
+	background-color: wheat;
+	color: black;
 	border-style: ridge;
-	border-color: wheat;
-	color: wheat;
 	border-width: 5px;
 	
-	font-size: 15px;
+	border-color: limegreen;
+
+
+	max-width: 600px;
+	min-height: 100px;
+	
 	overflow: auto;
-	text-align: center;
+}
 
-} */	/* end #player2 */ 
+#commentBox1, #commentBox2 {
+	position: relative;
+	float: left;
 
+	
+	
+	background-color: wheat;
+	color: black;
+	border-style: ridge;
+	border-width: 5px;
+	
+	border-color: limegreen;
+	margin: 0 auto;
+	overflow: auto;	 
+}
 input	{
 	width: 150px;
 	color: black
@@ -175,16 +204,7 @@ input	{
 
 }
 
-#animalRow	{
-	position: relative;
-	float: left;
-	padding: 0px;
-	margin: 0px;
-	width: 100%;
-	color: wheat;
-	font-size: 20px;
 
-}
 
 
 
@@ -224,8 +244,19 @@ button:hover, #addAnimal:hover {
 					}
 		
 		#player1, #resultsBox, #player2 {
-			margin-left: 30px;
+			margin-left: 40px;
 		}
+
+		#commentBox {
+	
+	        width: 250px;
+	    }
+	    
+	
+	
+
+
+
 	}
 		
 
