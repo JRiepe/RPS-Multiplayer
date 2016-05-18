@@ -38,7 +38,7 @@ $(document).ready(function(){
                 $('#p1Info').html('<br>' + p1Name + '<br>Wins: ' + p1Wins + '<br>Losses: ' + p1Losses);
             });
             gameData.orderByChild("player").equalTo(2).on("child_added", function(snapshot) {
-                
+                $("#nameBox").html("");
                 p2Name = snapshot.val().name;
                 p2Wins = snapshot.val().wins;
                 p2Losses = snapshot.val().losses;
@@ -113,9 +113,14 @@ $(document).ready(function(){
             $("#resetButton").on("click", function() {
 
               // clear out saved data
-                     gameData.set(null);
-                     $('#p1Info').html('');
-                     $('#p2Info').html('');
+                    gameData.set(null);
+                    $('#p1Info').html('');
+                    $('#p2Info').html('');
+                    $("#nameBox").html('<form id="nameForm">');
+                    $("#nameBox").append('<label for="nameInput">Enter your Name: </label>');
+                    $("#nameBox").append('<input type="text" id="nameInput"><br><br>');
+                    $("#nameBox").append('<input id="addPlayer" type="submit" value="Enter">');
+                    $("#nameBox").append('</form>');
              }) 
             // End logic with Firebase
 
