@@ -14,7 +14,7 @@ $(document).ready(function(){
         // Initialize variables
 
             var gameData = new Firebase(url1);
-            var gameTurns = new Firebase(url2);
+            var gameTurn = new Firebase(url2);
             var gameComments = new Firebase(url3);
            
             var pSnapshot;
@@ -40,7 +40,7 @@ $(document).ready(function(){
             
             var localData = "";
             var localComments = "";
-            var localTurns = "";
+            var localTurn = "";
             
         // changes data in boxes for player = 1
 
@@ -99,7 +99,7 @@ $(document).ready(function(){
         // when a value changes in player game data, we change that data locally
 
             gameData.on("value", function(pSnapshot) {   
-                console.log(pSnapshot.val());
+                //console.log(pSnapshot.val());
                 localData = pSnapshot.val();
 
             }, function (errorObject) {
@@ -108,23 +108,19 @@ $(document).ready(function(){
             
             
 
-            gameTurns.on("value", function(tSnapshot) {   
+            gameTurn.on("value", function(tSnapshot) {   
+                console.log('localTurn: '+localTurn.turn);
+                localTurn = tSnapshot.val();
+                $("#infoBox2").html("Player "+localTurn.turn+"'s move!")
+                if (localTurn.turn == 1 && yourPlayer == 1) {
+                    drawPlayer1(); 
+
+                } //end if (localTurn.turn == 1) {
                 
-                if (tSnapshot.val() == null) {
-                    localTurns.turns = 1;
-                } // end if
-                else {
-                    localTurns = tSnapshot.val();
-                  
-                    console.log('localTurns.turn: '+localTurns.turn+', yourPlayer: '+yourPlayer+', yourName: '+yourName);
-                    $("#infoBox2").html("Player "+localTurns.turn+"'s move!")
-                    if (yourPlayer == 1 && localTurns.turn == 1 ) {
-                            drawPlayer1();
-                        } // end if (localTurns.turn == 1)
-                    else if (yourPlayer == 2 && localTurns.turn == 2 ) {
-                            drawPlayer2();
-                        } // end else if
-                } // end else
+                else if (localTurn.turn == 2 && yourPlayer == 2) {
+                    drawPlayer2();
+               
+                } // end else if (localTurn == 2 && yourPlayer == 2)
             });   
 
            
@@ -160,13 +156,9 @@ $(document).ready(function(){
                     p1Name = yourName;
                     $('#infoBox1').html("Welcome, "+yourName+". You are Player 1")
                     
-                    gameTurns.set({
+                    gameTurn.update({
                         turn: playerTurn
                         
-                    });
-
-                    gameComments.push({
-                        comments: userComments
                     });
                     
                     gameData.push({
@@ -188,15 +180,12 @@ $(document).ready(function(){
                     yourPlayer = 2;
                     p2Name = yourName;
                     $('#infoBox1').html("Welcome, "+yourName+". You are Player 2")
-                    gameTurns.set({
+                    
+                    gameTurn.update({
                         turn: playerTurn
                         
                     });
 
-                    gameComments.push({
-                        comments: userComments
-                    });
-                    
                     gameData.push({
                             pnumber: yourPlayer,
                             name: p2Name,
@@ -250,7 +239,7 @@ $(document).ready(function(){
                     // clears firebase data
                     gameData.set(null);
                     gameComments.set(null);
-                    gameTurns.set(null); 
+                    gameTurn.set(null); 
                     location.reload();
                     // below redraws name input form to play again!
                    /* $('#p1Info').html('');
@@ -272,7 +261,7 @@ $(document).ready(function(){
             $('#p2Buttons').html('Awaiting Player 1');
             $('#p1Buttons').html('<button id="rockButton">Rock</Button><br>');
             $('#p1Buttons').append('<button id="paperButton">Paper</Button><br>');
-            $('#p1Buttons').append('<button id="paperButton">Scissors</Button><br>');
+            $('#p1Buttons').append('<button id="scissorsButton">Scissors</Button><br>');
 
     } // end function drawPlayer1()
 
@@ -280,7 +269,7 @@ $(document).ready(function(){
             $('#p1Buttons').html('Awaiting Player 2');
             $('#p2Buttons').html('<button id="rockButton">Rock</Button><br>');
             $('#p2Buttons').append('<button id="paperButton">Paper</Button><br>');
-            $('#p2Buttons').append('<button id="paperButton">Scissors</Button><br>');
+            $('#p2Buttons').append('<button id="scissorsButton">Scissors</Button><br>');
 
     } // end function drawPlayer2()
 
