@@ -2,24 +2,27 @@
 //      Javascript / Firebase RPS Game
 //------------------------------------------------------------------------------------------------
 
-// Link to Firebase (YOUR OWN APP)
+
 $(document).ready(function(){
             
+        // Link to Firebase (YOUR OWN APP)
 
             var url1 = "https://jriepe-rps-players.firebaseio.com/";
             var url2 = "https://jriepe-rps-turns.firebaseio.com/";
             var url3 = "https://jriepe-rps-comments.firebaseio.com/";
 
+        // Initialize variables
+
             var gameData = new Firebase(url1);
             var gameTurns = new Firebase(url2);
             var gameComments = new Firebase(url3);
-            
+           
             var pSnapshot;
             var tSnapshot;
             var cSnapshot;
 
             
-            var yourName;
+            var yourName = "";
             var yourPlayer;
             var opponentName;
             var p1Num;
@@ -36,9 +39,10 @@ $(document).ready(function(){
             var userComments = "";
             
             var localData = "";
-
+            var localComments = "";
             
             
+        // changes data in boxes for player = 1
 
             gameData.orderByChild("pnumber").equalTo(1).on("child_added", function(pSnapshot) {
                 
@@ -56,9 +60,11 @@ $(document).ready(function(){
                 $('#p1Buttons').html('');
                 $('#p1Score').html('<br>Wins: ' + p1Wins + '  Losses: ' + p1Losses);
 
-
-
             });
+            
+
+        // changes data in boxes for player = 2
+
             gameData.orderByChild("pnumber").equalTo(2).on("child_added", function(pSnapshot) {
                 $("#nameBox").html("");
                 console.log('Snap: '+pSnapshot.val())
@@ -78,7 +84,20 @@ $(document).ready(function(){
 
             });
                 
-                
+        // updates comments/smack talk every time a comment is made
+
+            gameComments.on("child_added", function(cSnapshot) {
+                localComments = cSnapshot.val().comments;
+                console.log(localComments);
+                $("#commentBox").append(localComments + '<br>');
+                //$('#commentBox').scrollTop($('#commentsBox')[0].scrollHeight);
+                //$("#commentBox").animate({ scrollTop: $("#commentBox").attr("scrollHeight") - $('#commentBox').height() }, 3000);
+ 
+
+            })
+
+        // when a value changes in player game data, we change that data locally
+
             gameData.on("value", function(pSnapshot) {   
                 console.log(pSnapshot.val());
                 localData = pSnapshot.val();
@@ -86,16 +105,52 @@ $(document).ready(function(){
             }, function (errorObject) {
                 //console.log("The read failed: " + errorObject.code);
             });
+            
+            
 
+            gameTurns.on("value", function(tSnapshot) {   
+                console.log(tSnapshot.val());
+                localTurns = tSnapshot.val();
+                $("#infoBox2").html("Player "+localTurns.turn+"'s move!")
+                if (localTurns.turn == 1) {
+                    drawPlayer1();
+                }
+                else {
+                    drawPlayer2();
+                }
+            }, function (errorObject) {
+                //console.log("The read failed: " + errorObject.code);
+            });
+
+
+        // on click function for add comment
+
+            $(document).on("click", "#addComment", function() {
+                userComments = $("#commentInput").val().trim();
+                userComments = yourName + ": " + userComments;
+                if (yourName != "") {
+                    console.log(yourName);
+                    gameComments.push({
+                           comments: userComments
+                        });
+                }
+                else {
+                    alert("Sorry, but only active participants can make comments!");
+                }
+                return false;
+            })
+
+        // on click function for adding player(s)
 
             $(document).on("click", "#addPlayer", function() {
                 yourName = $('#nameInput').val().trim();
                 
-               
+            // if empty then assign player 1
+
                 if (localData === null) {
                     yourPlayer = 1;
                     p1Name = yourName;
-                    //console.log('p1Name: ' + p1Name);
+                    $('#infoBox1').html("Welcome, "+yourName+", you are Player 1")
                     
                     gameTurns.set({
                         turn: playerTurn
@@ -116,14 +171,15 @@ $(document).ready(function(){
                      });    
                     
                     $("#nameBox").html("");
-                    //console.log(ref.key());
-                    //$('#p1Info').html('<br>' + p1Name + '<br>Wins: ' + p1Wins + '<br>Losses: ' + p1Losses);
+                    
                     return false;
                 }
+
+            // if not empty and not greater than or equal to 2
                 else if (localData !== null && localData.pnumber != 2) {
                     yourPlayer = 2;
                     p2Name = yourName;
-                    //console.log('p2Name: ' + p2Name);
+                    $('#infoBox1').html("Welcome, "+yourName+", you are Player 2")
                     gameTurns.set({
                         turn: playerTurn
                         
@@ -141,36 +197,41 @@ $(document).ready(function(){
                             choice: p2Choice
                         
                      });    
-                    //$('#p2Info').html('<br>' + p2Name + '<br>' + 'Wins: ' + p2Wins + 'Losses: ' + p2Losses);
+                    
                 }
                 else    {
                     alert('Sorry, already two players. Please try again later!')
+                    
                 }
 
                 return false;
 
               
-            });
+            }); // end $(document).on("click", "#addPlayer", function()
 
-            // on click press rock button
+        // on click press rock button
+            
             $(document).on("click", "#rockButton", function() {
                 if (playerTurn === 1 && yourPlayer === 1) {
 
                 }
             }); // end $("#rockButton").on("click"
             
-            // on click press paper button
+        // on click press paper button
+            
             $(document).on("click", "#paperButton", function() {
 
             }); // end $("#paperButton").on("click"
 
-            // on click press scissors button
+        // on click press scissors button
+            
             $(document).on("click", "#scissorsButton", function() {
 
             }); // end $("#scissorsButton").on("click"
 
 
-            // Whenever a user clicks the restart-reset button
+        // Whenever a user clicks the restart-reset button
+            
             $(document).on("click", "#resetButton", function() {
                     
                     //gameData.orderByChild("name").equalTo(yourName).set(null);
@@ -179,7 +240,9 @@ $(document).ready(function(){
             
                     //}
                     // clears firebase data
-                    gameData.set(null); 
+                    gameData.set(null);
+                    gameComments.set(null);
+                    gameTurns.set(null); 
                     location.reload();
                     // below redraws name input form to play again!
                    /* $('#p1Info').html('');
@@ -192,9 +255,32 @@ $(document).ready(function(){
              
              }) // end $("#resetButton").on("click"...
             
- 
+    // Functions drawplayer1 and drawPlayer2
+
+    function drawPlayer1() {
+            $('#p2Buttons').html('Awaiting Player 1');
+            $('#p1Buttons').html('<button id="rockButton">Rock</Button><br>');
+            $('#p1Buttons').append('<button id="paperButton">Paper</Button><br>');
+            $('#p1Buttons').append('<button id="paperButton">Scissors</Button><br>');
+
+    } // end function drawPlayer1()
+
+    function drawPlayer2() {
+            $('#p1Buttons').html('Awaiting Player 2');
+            $('#p2Buttons').html('<button id="rockButton">Rock</Button><br>');
+            $('#p2Buttons').append('<button id="paperButton">Paper</Button><br>');
+            $('#p2Buttons').append('<button id="paperButton">Scissors</Button><br>');
+
+    } // end function drawPlayer2()
 
 
-}); // end $(document).ready(function() { 
+    function gameLogic() {
+
+    } // end function gameLogic()
+
+
+
+
+}); // end $(document).ready(function() 
 
 

@@ -80,7 +80,7 @@ h2 {
 
 }
 
-#nameForm, #nameInput, label{
+#nameForm, #nameInput, label {
 	background-color: transparent;
 	color: white;
 	font-size: 18px;
@@ -100,11 +100,7 @@ h2 {
 
 
 
-#addPlayer, #resetButton  {
-	color: black;
-	background-color: wheat;
 
-}   
 
 #playerBox {
 	margin: 0 auto;
@@ -146,49 +142,59 @@ h2 {
 
 }	/* end #player1 #player2 #resultsBox */
 
-
+#infoBox1, #infoBox2 {
+	text-align: center;
+	color: white;
+	font-size: 20px;
+}
 
 
 #commentBox {
 	margin: 0 auto;
 	position: relative;
+	text-align: left;
 	float: none;
-
-	
-	
 	background-color: wheat;
 	color: black;
 	border-style: ridge;
 	border-width: 5px;
-	
 	border-color: limegreen;
-
-
 	max-width: 600px;
-	min-height: 100px;
-	
+	height: 100px;
 	overflow: auto;
+
 }
 
 #commentBox1, #commentBox2 {
 	position: relative;
 	float: left;
-
-	
-	
 	background-color: wheat;
 	color: black;
 	border-style: ridge;
 	border-width: 5px;
-	
 	border-color: limegreen;
 	margin: 0 auto;
 	overflow: auto;	 
 }
+
+
+
 input	{
 	width: 150px;
 	color: black
 	background-color: steelblue;
+}
+
+
+#addPlayer, #resetButton, #addComment, button {
+	color: black;
+	background-color: wheat;
+	min-width: 100px;
+
+}   	
+
+#commentInput {
+	width: 300px;
 }
 
 #buttonCol	{
@@ -220,7 +226,7 @@ margin-bottom: 5px;
 
 }
 
-button:hover, #addAnimal:hover { 
+button:hover { 
 	
 	background-color: limegreen;
 	border-color: wheat;
