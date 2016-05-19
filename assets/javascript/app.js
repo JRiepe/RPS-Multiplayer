@@ -41,6 +41,10 @@ $(document).ready(function(){
             var localData = "";
             var localComments = "";
             var localTurn = "";
+            gameTurn.update({
+                        turn: playerTurn
+                        
+                    });
             
         // changes data in boxes for player = 1
 
@@ -92,9 +96,9 @@ $(document).ready(function(){
                 $("#commentBox").append(localComments + '<br>');
                 //$('#commentBox').scrollTop($('#commentsBox')[0].scrollHeight);
                 //$("#commentBox").animate({ scrollTop: $("#commentBox").attr("scrollHeight") - $('#commentBox').height() }, 3000);
- 
-
-            })
+            }, function (errorObject) {
+                //console.log("The read failed: " + errorObject.code);
+            });
 
         // when a value changes in player game data, we change that data locally
 
@@ -109,8 +113,8 @@ $(document).ready(function(){
             
 
             gameTurn.on("value", function(tSnapshot) {   
-                console.log('localTurn: '+localTurn.turn);
                 localTurn = tSnapshot.val();
+                console.log('localTurn: '+localTurn.turn);
                 $("#infoBox2").html("Player "+localTurn.turn+"'s move!")
                 if (localTurn.turn == 1 && yourPlayer == 1) {
                     drawPlayer1(); 
@@ -121,6 +125,8 @@ $(document).ready(function(){
                     drawPlayer2();
                
                 } // end else if (localTurn == 2 && yourPlayer == 2)
+            }, function (errorObject) {
+                //console.log("The read failed: " + errorObject.code);
             });   
 
            
@@ -133,7 +139,7 @@ $(document).ready(function(){
                 userComments = $("#commentInput").val().trim();
                 userComments = yourName + ": " + userComments;
                 if (yourName != "") {
-                    console.log(yourName);
+                    
                     gameComments.push({
                            comments: userComments
                         });
@@ -151,15 +157,15 @@ $(document).ready(function(){
                 
             // if empty then assign player 1
 
-                if (localData === null) {
+                if (localData == null) {
                     yourPlayer = 1;
                     p1Name = yourName;
                     $('#infoBox1').html("Welcome, "+yourName+". You are Player 1")
                     
-                    gameTurn.update({
-                        turn: playerTurn
+                    //gameTurn.update({
+                    //    turn: playerTurn
                         
-                    });
+                    //});
                     
                     gameData.push({
                             pnumber: yourPlayer,
@@ -176,15 +182,15 @@ $(document).ready(function(){
                 }
 
             // if not empty and not greater than or equal to 2
-                else if (localData !== null && localData.pnumber != 2) {
+                else if (localData != null && localData.pnumber != 2) {
                     yourPlayer = 2;
                     p2Name = yourName;
                     $('#infoBox1').html("Welcome, "+yourName+". You are Player 2")
                     
-                    gameTurn.update({
-                        turn: playerTurn
+                    //gameTurn.update({
+                     //   turn: playerTurn
                         
-                    });
+                    //});
 
                     gameData.push({
                             pnumber: yourPlayer,
