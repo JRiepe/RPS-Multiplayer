@@ -40,14 +40,14 @@ $(document).ready(function(){
             
             var localData = "";
             var localComments = "";
-            
+            var localTurns = "";
             
         // changes data in boxes for player = 1
 
             gameData.orderByChild("pnumber").equalTo(1).on("child_added", function(pSnapshot) {
                 
                 p1Num = pSnapshot.val().pnumber;
-                console.log('p1Num: '+p1Num);
+                
                 p1Name = pSnapshot.val().name;
 
                 p1Wins = pSnapshot.val().wins;
@@ -67,7 +67,7 @@ $(document).ready(function(){
 
             gameData.orderByChild("pnumber").equalTo(2).on("child_added", function(pSnapshot) {
                 $("#nameBox").html("");
-                console.log('Snap: '+pSnapshot.val())
+                
                 p2Num = pSnapshot.val().pnumber;
               
                 p2Name = pSnapshot.val().name;
@@ -88,7 +88,7 @@ $(document).ready(function(){
 
             gameComments.on("child_added", function(cSnapshot) {
                 localComments = cSnapshot.val().comments;
-                console.log(localComments);
+                
                 $("#commentBox").append(localComments + '<br>');
                 //$('#commentBox').scrollTop($('#commentsBox')[0].scrollHeight);
                 //$("#commentBox").animate({ scrollTop: $("#commentBox").attr("scrollHeight") - $('#commentBox').height() }, 3000);
@@ -109,19 +109,27 @@ $(document).ready(function(){
             
 
             gameTurns.on("value", function(tSnapshot) {   
-                console.log(tSnapshot.val());
-                localTurns = tSnapshot.val();
-                $("#infoBox2").html("Player "+localTurns.turn+"'s move!")
-                if (localTurns.turn == 1) {
-                    drawPlayer1();
-                }
+                
+                if (tSnapshot.val() == null) {
+                    localTurns.turns = 1;
+                } // end if
                 else {
-                    drawPlayer2();
-                }
-            }, function (errorObject) {
-                //console.log("The read failed: " + errorObject.code);
-            });
+                    localTurns = tSnapshot.val();
+                  
+                    console.log('localTurns.turn: '+localTurns.turn+', yourPlayer: '+yourPlayer+', yourName: '+yourName);
+                    $("#infoBox2").html("Player "+localTurns.turn+"'s move!")
+                    if (yourPlayer == 1 && localTurns.turn == 1 ) {
+                            drawPlayer1();
+                        } // end if (localTurns.turn == 1)
+                    else if (yourPlayer == 2 && localTurns.turn == 2 ) {
+                            drawPlayer2();
+                        } // end else if
+                } // end else
+            });   
 
+           
+
+// ON CLICK FUNCTIONS
 
         // on click function for add comment
 
@@ -150,7 +158,7 @@ $(document).ready(function(){
                 if (localData === null) {
                     yourPlayer = 1;
                     p1Name = yourName;
-                    $('#infoBox1').html("Welcome, "+yourName+", you are Player 1")
+                    $('#infoBox1').html("Welcome, "+yourName+". You are Player 1")
                     
                     gameTurns.set({
                         turn: playerTurn
@@ -179,7 +187,7 @@ $(document).ready(function(){
                 else if (localData !== null && localData.pnumber != 2) {
                     yourPlayer = 2;
                     p2Name = yourName;
-                    $('#infoBox1').html("Welcome, "+yourName+", you are Player 2")
+                    $('#infoBox1').html("Welcome, "+yourName+". You are Player 2")
                     gameTurns.set({
                         turn: playerTurn
                         
@@ -212,7 +220,7 @@ $(document).ready(function(){
         // on click press rock button
             
             $(document).on("click", "#rockButton", function() {
-                if (playerTurn === 1 && yourPlayer === 1) {
+                if (playerTurn == 1 && yourPlayer == 1) {
 
                 }
             }); // end $("#rockButton").on("click"
@@ -255,7 +263,10 @@ $(document).ready(function(){
              
              }) // end $("#resetButton").on("click"...
             
-    // Functions drawplayer1 and drawPlayer2
+// FUNCTIONS
+
+
+// Functions drawplayer1 and drawPlayer2
 
     function drawPlayer1() {
             $('#p2Buttons').html('Awaiting Player 1');
